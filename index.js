@@ -172,25 +172,32 @@ function scoreboard(getInningScoreCb, inningCb, numOfInnings) {
   const gameByInning = [];
   let homeScore = 0;
   let awayScore = 0;
+  let awayScoreFinal = 0;
+  let homeScoreFinal = 0;
 
   for (let i = 0; i < numOfInnings; i++) {
-    const currentScore = getInningScoreCb(inningCb);
+    getInningScoreCb(inningCb);
     homeScore = inningCb();
+    homeScoreFinal += homeScore;
     awayScore = inningCb();
+    awayScoreFinal += awayScore;
+
     gameByInning.push(`Inning ${i + 1}: Away ${awayScore} - Home ${homeScore}`);
   }
 
-  if (homeScore === awayScore) {
+  if (homeScoreFinal === awayScoreFinal) {
     gameByInning.push(
-      `This game will require extra innings: Away ${awayScore} - Home ${homeScore}`
+      `This game will require extra innings: Away ${awayScoreFinal} - Home ${homeScoreFinal}`
     );
   } else {
-    gameByInning.push(`Final Score: Away ${awayScore} - Home ${homeScore}`);
+    gameByInning.push(
+      `Final Score: Away ${awayScoreFinal} - Home ${homeScoreFinal}`
+    );
   }
   return gameByInning;
 }
 
-console.log(scoreboard(getInningScore, inning, 3));
+console.log(scoreboard(getInningScore, inning, 9));
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo() {
